@@ -16,4 +16,21 @@ public class EmailService {
        message.setText("LyHongDang");
        mailSender.send(message);
     }
+    public void sendEmailSync(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(content, isHtml);
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error sending mail", e);
+        }
+    }
+    public void sendEmailFromTemplateSync(String to, String subject, String templateName) {
+        Context context = new Context();
+        String content = this.templateEngine.process(templateName, context);
+        this.sendEmailSync(to, subject, content, false, true);
+    }
 }
