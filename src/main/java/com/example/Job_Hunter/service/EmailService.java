@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -46,12 +47,13 @@ public class EmailService {
             throw new RuntimeException("Error sending mail", e);
         }
     }
-    public void sendEmailFromTemplateSync(String to, String subject, String templateName) {
+    @Async
+    public void sendEmailFromTemplateSync(String to, String subject, String templateName, String username, Object value) {
         Context context = new Context();
         List<Job> arrJobs = jobRepository.findAll();
         String name = "ABC";
-        context.setVariable("Name", name);
-        context.setVariable("jobs", arrJobs);
+        context.setVariable("Name", username);
+        context.setVariable("jobs", value);
         String content = this.templateEngine.process(templateName, context);
         this.sendEmailSync(to, subject, content, false, true);
     }

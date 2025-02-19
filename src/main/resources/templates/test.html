@@ -7,10 +7,13 @@
 </head>
 <body>
 <h1 th:text="${Name}" >Hello LHD</h1>
-<table th:each="job : ${jobs}">
-<tr>
+<table>
+<tr th:each="job : ${jobs}">
     <td th:text="${job.name}"> </td>
     <td th:text="${job.company.name}"> </td>
+    <td th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}"> </td>
+    <td th:each="skill: ${job.skills}" th:text="${skill.name}"> </td>
+
 </tr>
 </table>
 </body>
