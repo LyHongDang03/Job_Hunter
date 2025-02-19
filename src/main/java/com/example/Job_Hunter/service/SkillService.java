@@ -59,6 +59,5 @@ public class SkillService {
             job.getSkills().remove(currentSkill);
         }
         skillRepository.delete(skill.orElse(null));
-
     }
 }
