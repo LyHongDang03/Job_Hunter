@@ -58,6 +58,9 @@ public class SkillService {
         for (Job job: currentSkill.getJobs()){
             job.getSkills().remove(currentSkill);
         }
+        for (Subscriber sub: currentSkill.getSubscribers()){
+            sub.getSkills().remove(currentSkill);
+        }
         skillRepository.delete(skill.orElse(null));
     }
 }
