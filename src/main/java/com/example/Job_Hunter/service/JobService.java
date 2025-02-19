@@ -1,5 +1,6 @@
 package com.example.Job_Hunter.service;
 
+import com.example.Job_Hunter.domain.Entity.Company;
 import com.example.Job_Hunter.domain.Entity.Job;
 import com.example.Job_Hunter.domain.Entity.Skill;
 import com.example.Job_Hunter.domain.response.ResCreateJob;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobService {
@@ -35,6 +37,12 @@ public class JobService {
             List<Skill> skills = skillRepository.findAllById(req);
             job.setSkills(skills);
         }
+        if (job.getCompany() != null) {
+            Optional<Company> company = companyRepository.findById(job.getCompany().getId());
+            if (company.isPresent()) {
+                job.setCompany(company.get());
+            }
+        }
         assert job != null;
         Job currentJob = jobRepository.save(job);
         ResCreateJob resCreateJob = new ResCreateJob();
@@ -55,6 +63,10 @@ public class JobService {
                     .map(Skill::getName)
                     .toList();
             resCreateJob.setSkill(skills);
+        }
+        if (currentJob.getCompany() != null) {
+            String companyName = currentJob.getCompany().getName();
+            resCreateJob.setCompany(companyName);
         }
         return resCreateJob;
     }

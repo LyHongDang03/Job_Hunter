@@ -1,5 +1,7 @@
 package com.example.Job_Hunter.service;
 
+import com.example.Job_Hunter.domain.Entity.Job;
+import com.example.Job_Hunter.repository.JobRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +13,18 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+    private final JobRepository jobRepository;
 
-    public EmailService(SpringTemplateEngine templateEngine) {
+    public EmailService(SpringTemplateEngine templateEngine, JobRepository jobRepository) {
         this.templateEngine = templateEngine;
+        this.jobRepository = jobRepository;
     }
 
     public void sendEmail() {
@@ -43,6 +48,10 @@ public class EmailService {
     }
     public void sendEmailFromTemplateSync(String to, String subject, String templateName) {
         Context context = new Context();
+        List<Job> arrJobs = jobRepository.findAll();
+        String name = "ABC";
+        context.setVariable("Name", name);
+        context.setVariable("jobs", arrJobs);
         String content = this.templateEngine.process(templateName, context);
         this.sendEmailSync(to, subject, content, false, true);
     }

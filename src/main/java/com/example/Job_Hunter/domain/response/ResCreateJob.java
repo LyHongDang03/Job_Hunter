@@ -1,5 +1,6 @@
 package com.example.Job_Hunter.domain.response;
 
+import com.example.Job_Hunter.domain.Entity.Company;
 import com.example.Job_Hunter.utill.constant.Level;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class ResCreateJob {
     private LocalDateTime endDate;
     private boolean active;
     private List<String> skill;
+    private String company;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

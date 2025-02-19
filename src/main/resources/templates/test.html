@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thymeleaf Hello</title>
+</head>
+<body>
+<h1 th:text="${Name}" >Hello LHD</h1>
+<table th:each="job : ${jobs}">
+<tr>
+    <td th:text="${job.name}"> </td>
+    <td th:text="${job.company.name}"> </td>
+</tr>
+</table>
+</body>
+</html>
