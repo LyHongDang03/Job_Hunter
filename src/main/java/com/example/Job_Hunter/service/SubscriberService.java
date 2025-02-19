@@ -66,7 +66,7 @@ public class SubscriberService {
                                 "Cơ hội việc làm hot đang chờ đón bạn, khám phá ngay",
                                 "test",
                                 sub.getName(),
-                                listJobs);
+                                arr);
                     }
                 }
             }
