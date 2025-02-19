@@ -1,6 +1,5 @@
 package com.example.Job_Hunter.domain.response;
 
-import com.example.Job_Hunter.domain.Entity.Skill;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
