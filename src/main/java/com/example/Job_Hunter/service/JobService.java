@@ -79,6 +79,12 @@ public class JobService {
             List<Skill> skills = skillRepository.findAllById(req);
             job.setSkills(skills);
         }
+        if (job.getCompany() != null) {
+            Optional<Company> company = companyRepository.findById(job.getCompany().getId());
+            if (company.isPresent()) {
+                job.setCompany(company.get());
+            }
+        }
         assert job != null;
         Job currentJob = jobRepository.save(job);
         ResUpdateJob resUpdateJob = new ResUpdateJob();
@@ -99,6 +105,10 @@ public class JobService {
                     .map(Skill::getName)
                     .toList();
             resUpdateJob.setSkill(skills);
+        }
+        if (currentJob.getCompany() != null) {
+            String companyName = currentJob.getCompany().getName();
+            resUpdateJob.setCompany(companyName);
         }
         return resUpdateJob;
     }

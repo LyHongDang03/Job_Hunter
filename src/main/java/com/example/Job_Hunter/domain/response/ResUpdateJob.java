@@ -22,6 +22,7 @@ public class ResUpdateJob {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private boolean active;
+    private String company;
     private List<String> skill;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
